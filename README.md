@@ -10,7 +10,7 @@ To develop and apply advanced SQL skills by analyzing Spotify’s music dataset.
 
 #  Dataset
 The dataset includes various attributes such as track names, album details, artist names, stream counts, likes, comments, views, and musical features like energy, danceability, and liveness. It was initially unstructured and required normalization for accurate querying and analysis.
-<a href=""> Dataset</a>
+<a href="https://github.com/ankit200124/Spotify-Dataset-Exploration-Using-SQL/blob/main/dataset.csv"> Dataset</a>
 
 # Schema
 ```
@@ -60,45 +60,45 @@ select distinct most_played_on from spotify;
 
 # Business Problems and Solutions
 
-# Retrieve all tracks with over 1 billion streams
+### Retrieve all tracks with over 1 billion streams
 ```
 SELECT * 
 FROM spotify 
 WHERE stream > 1000000000;
 ```
-# List all albums with their respective artists
+### List all albums with their respective artists
 ```
 SELECT DISTINCT album, artist 
 FROM spotify 
 ORDER BY album;
 ```
-# Get the total number of comments where the track is licensed
+### Get the total number of comments where the track is licensed
 ```
 SELECT SUM(comments) AS total_comments 
 FROM spotify 
 WHERE licensed = 'true';
 ```
-# Find all tracks that are released as singles
+### Find all tracks that are released as singles
 ```
 SELECT track 
 FROM spotify 
 WHERE album_type = 'single';
 ```
-# Count the total number of tracks for each artist
+### Count the total number of tracks for each artist
 ```
 SELECT artist, COUNT(*) AS total_tracks 
 FROM spotify 
 GROUP BY artist 
 ORDER BY total_tracks ASC;
 ```
-# Calculate the average danceability of tracks in each album
+### Calculate the average danceability of tracks in each album
 ```
 SELECT album, AVG(danceability) AS average_dance 
 FROM spotify  
 GROUP BY album 
 ORDER BY average_dance DESC;
 ```
-# Get the top 5 tracks with the highest energy
+### Get the top 5 tracks with the highest energy
 ```
 SELECT track, MAX(energy) 
 FROM spotify 
@@ -106,7 +106,7 @@ GROUP BY track
 ORDER BY MAX(energy) DESC 
 LIMIT 5;
 ```
-# Show total views and likes for tracks marked as official videos
+### Show total views and likes for tracks marked as official videos
 ```
 SELECT track, 
        SUM(views) AS total_views, 
@@ -116,14 +116,14 @@ WHERE official_video = 'true'
 GROUP BY track 
 ORDER BY total_views DESC;
 ```
-# Calculate total views per album
+### Calculate total views per album
 ```
 SELECT album, track, SUM(views) AS total_views 
 FROM spotify 
 GROUP BY album, track 
 ORDER BY total_views DESC;
 ```
-# Retrieve track names with more streams on Spotify than YouTube
+### Retrieve track names with more streams on Spotify than YouTube
 ```
 SELECT * 
 FROM (
@@ -136,7 +136,7 @@ FROM (
 WHERE streamed_on_spotify > streamed_on_youtube 
   AND streamed_on_youtube <> 0;
 ```
-# Get top 3 most-viewed tracks for each artist
+### Get top 3 most-viewed tracks for each artist
 ```
 WITH ranking_artist AS (
   SELECT artist,
@@ -150,13 +150,13 @@ SELECT *
 FROM ranking_artist 
 WHERE rank <= 3;
 ```
-# List tracks where liveness is above the average
+### List tracks where liveness is above the average
 ```
 SELECT track, artist, liveness 
 FROM spotify 
 WHERE liveness > (SELECT AVG(liveness) FROM spotify);
 ```
-# Show difference between max and min energy for each album
+### Show difference between max and min energy for each album
 ```
 WITH q13 AS (
   SELECT album, 
@@ -170,6 +170,8 @@ SELECT album,
 FROM q13 
 ORDER BY energy_difference DESC;
 ```
+<a href="https://github.com/ankit200124/Spotify-Dataset-Exploration-Using-SQL/blob/main/Spotify_Project.sql"> SQL File</a>
+
 # Outcome & Findings
 The project helped identify key patterns such as the most streamed tracks, top-viewed artists, genre-based performance, and trends in engagement metrics. Complex queries involving ranking, aggregation, and condition-based filtering revealed deeper insights into listening behaviors across platforms like YouTube and Spotify.
 
